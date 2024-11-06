@@ -95,5 +95,38 @@ class Admin extends Controller
 
         return redirect()->route('user', ['id' => $id]);
     }
+
+    public function getCategories()
+    {
+        return view('admin/categories', ['categories' => Categories::all()->toArray()]);
+    }
+
+    public function getCategory ($id = null)
+    {
+        return view('admin/category', ['category' => Categories::find($id)->toArray(), 'id' => $id]);
+    }
+
+    public function createCategory(Request $request, string $id = '0')
+    {
+        if ($request->isMethod("GET")) {
+            return view('admin/category', ['category' => [], 'id' => 0]);
+        }
+
+        if ($id === '0') {
+            Categories::insert([
+                Categories::FIELD_NAME => $request->filled('name') ? (string) $request->post('name') : '',
+                Categories::FIELD_DESCRIPTION => $request->filled('description') ?(string) $request->post('description') : '',
+                Categories::FIELD_IMG_URL => $request->filled('img_url') ? (string) $request->post('img_url') : ''
+            ]);
+        } else {
+            Categories::where(Categories::FIELD_ID, '=', $id)->limit(1)->update([
+                Categories::FIELD_NAME => $request->filled('name') ? (string) $request->post('name') : '',
+                Categories::FIELD_DESCRIPTION => $request->filled('description') ? (string) $request->post('description') : '',
+                Categories::FIELD_IMG_URL => $request->filled('img_url') ? (string) $request->post('img_url') : ''
+            ]);
+        }
+
+        return redirect()->route('categories');
+    }
 }
 

@@ -12,6 +12,7 @@ class Categories extends BaseModel
             FIELD_DESCRIPTION = 'description',
             FIELD_IMG_URL = 'img_url';
 
+    protected $fillable = [self::FIELD_NAME];
 
     protected $table = 'categories';
     use HasFactory;

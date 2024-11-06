@@ -30,6 +30,7 @@ Route::get('/toprated', [Categories::class, 'getTopRated'])->name('getTopRated')
 
 //Admin panel routes
 Route::get('/dashboard', [Admin::class, 'getAdminPanel'])->middleware(['auth', 'verified'])->name('dashboard');
+
 Route::get('/dashboard/content', [Admin::class, 'getContent'])->middleware(['auth', 'verified'])->name('contents');
 Route::get('/dashboard/content/{id}', [Admin::class, 'getVideoContent'])->middleware(['auth', 'verified'])->name('content');
 Route::post('/dashboard/content/{id}', [Admin::class, 'updateVideoContent'])->middleware(['auth', 'verified'])->name('updateVideoContent');
@@ -39,6 +40,11 @@ Route::delete('/dashboard/content/{id}', [Admin::class, 'updateVideoContent'])->
 Route::get('/dashboard/users', [Admin::class, 'getUsers'])->middleware(['auth', 'verified'])->name('users');
 Route::get('/dashboard/user/{id}', [Admin::class, 'getUser'])->middleware(['auth', 'verified'])->name('user');
 Route::post('/dashboard/user/{id}', [Admin::class, 'updateUser'])->middleware(['auth', 'verified'])->name('updateUser');
+
+Route::get('/dashboard/categories', [Admin::class, 'getCategories'])->middleware(['auth', 'verified'])->name('categories');
+Route::get('/dashboard/categories/{id}', [Admin::class, 'getCategory'])->middleware(['auth', 'verified'])->name('category');
+Route::get('/dashboard/category', [Admin::class, 'createCategory'])->middleware(['auth', 'verified'])->name('categoryEmpty');
+Route::post('/dashboard/category/{id}', [Admin::class, 'createCategory'])->middleware(['auth', 'verified'])->name('createCategoryPost');
 
 Route::get('/dashboard/welcome', function (){
     return view('welcome');
