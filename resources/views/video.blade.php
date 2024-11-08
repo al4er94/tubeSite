@@ -1,6 +1,5 @@
 <?php
 use App\Models\VideoContents;
-
 ?>
 <head>
     <meta charset="utf-8">

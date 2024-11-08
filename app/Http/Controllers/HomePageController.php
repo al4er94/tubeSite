@@ -12,4 +12,11 @@ class HomePageController extends Controller
             'content' => VideoContents::paginate(self::$defaultPagination)->toArray()
         ]);
     }
+
+    public function main()
+    {
+        return view('public.main', [
+            'content' => VideoContents::paginate(self::$defaultPagination)->toArray()
+        ]);
+    }
 }

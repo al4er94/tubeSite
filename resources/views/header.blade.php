@@ -69,7 +69,6 @@ use Illuminate\Support\Facades\Config;
                                                     <li><a href="{{ route('register') }}">Register</a></li>
                                                     @endif
                                                 @endauth
-                                            </div>
                                         @endif
                                     </ul>
                                 </nav>

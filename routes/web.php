@@ -18,14 +18,22 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomePageController::class, 'index'])->name('home.index');
+Route::get('/', [HomePageController::class, 'index'])->name('home.index'); //old
+Route::get('/public', [HomePageController::class, 'main'])->name('home.public');
+
 Route::get('/video/{id}', [Video::class, 'getVideo'])->name('video');
 
-Route::get('/categories', [Categories::class, 'allCategories'])->name('allCategories');
-Route::get('/categories/{id}', [Categories::class, 'videosByCategories'])->name('videosByCategories');
+Route::get('/categories_old', [Categories::class, 'allCategories'])->name('allCategories'); //old
+Route::get('/categories', [Categories::class, 'getAllCategories'])->name('getAllCategories');
 
-Route::get('/mostviews', [Categories::class, 'getMostView'])->name('getMostView');
-Route::get('/toprated', [Categories::class, 'getTopRated'])->name('getTopRated');
+Route::get('/categories_old/{id}', [Categories::class, 'videosByCategories'])->name('videosByCategories'); //old
+Route::get('/categories/{id}', [Categories::class, 'getVideosByCategories'])->name('getVideosByCategories');
+
+Route::get('/mostviews_old', [Categories::class, 'getMostView'])->name('getMostView'); //old
+Route::get('/mostviews', [Categories::class, 'getMostViewVideos'])->name('getMostViewVideos');
+
+Route::get('/toprated_old', [Categories::class, 'getTopRated'])->name('getTopRated'); //old
+Route::get('/toprated', [Categories::class, 'getTopRatedVideos'])->name('getTopRatedVideos');
 
 
 //Admin panel routes
