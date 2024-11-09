@@ -39,8 +39,8 @@ use App\Models\VideoContents;
                     <!-- Trending Tittle -->
                     <div class="about-right mb-90">
                         <div class="about-img">
-                            <video controls >
-                                <source src="{{$video[VideoContents::FIELD_URL]}}" type="video/mp4">
+                            <video controls poster = "{{$video[VideoContents::FIELD_PREVIEW_URL]}}">
+                                <source src="{{$video[VideoContents::FIELD_URL]}}" type="video/mp4" >
                                 Your browser does not support the video tag.
                             </video>
                         </div>

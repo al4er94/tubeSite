@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Config;
                         <!-- Logo -->
                         <div class="col-xl-3 col-lg-3 col-md-3">
                             <div class="logo">
-                                <a href="{{ route('home.index')}}"><img src="<?= Config::get('app.url') . "/" ?>assets/img/logo/logo.png" alt=""></a>
+                                <a href="{{ route('home.public')}}"><img src="<?= Config::get('app.url') . "/" ?>assets/img/logo/logo.png" alt=""></a>
                             </div>
                         </div>
                         <div class="col-xl-9 col-lg-9 col-md-9">
@@ -39,16 +39,13 @@ use Illuminate\Support\Facades\Config;
                         <div class="col-xl-10 col-lg-10 col-md-12 header-flex">
                             <!-- sticky -->
                             <div class="sticky-logo">
-                                <a href="{{ route('home.index')}}"><img src="assets/img/logo/logo.png" alt=""></a>
+                                <a href="{{ route('home.public')}}"><img src="assets/img/logo/logo.png" alt=""></a>
                             </div>
                             <!-- Main-menu -->
                             <div class="main-menu d-none d-md-block">
                                 <nav>
                                     <ul id="navigation">
-                                        <li><a href="{{ route('home.index')}}">Home</a></li>
-                                        <li><a href="{{ route('allCategories')}}">Category</a></li>
-                                        <li><a href="{{ route('getMostView')}}">Most viewed</a></li>
-                                        <li><a href="{{ route('getTopRated')}}">Top Rated</a></li>
+                                        <li><a href="{{ route('home.public')}}">Home</a></li>
                                         @if (Route::has('login'))
                                                 @auth
                                                     <li><a href="#">My Favorite</a></li>

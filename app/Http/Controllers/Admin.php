@@ -57,6 +57,8 @@ class Admin extends Controller
         VideoContents::where(VideoContents::FIELD_ID, '=', $id)->update([
             VideoContents::FIELD_NAME => $request->filled('name') ? $request->post('name') : '',
             VideoContents::FIELD_DESCRIPTION => $request->filled('description') ? $request->post('description') : '',
+            VideoContents::FIELD_LIKES => $request->filled('likes') ? (int) $request->post('likes') : '',
+            VideoContents::FIELD_VIEWS => $request->filled('views') ? (int) $request->post('views') : '',
         ]);
 
         return redirect()->route('content', ['id' => $id]);

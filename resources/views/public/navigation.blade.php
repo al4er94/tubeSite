@@ -52,6 +52,27 @@ use Illuminate\Support\Facades\Route;
                        @endif
                     >Most view</a>
                 </li>
+                @if (Route::has('login'))
+                    @auth
+                        <li><a href="#">My Favorite</a></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-dropdown-link :href="route('logout')"
+                                                 onclick="event.preventDefault();
+                                                                this.closest('form').submit();">
+                                    {{ __('Log Out') }}
+                                </x-dropdown-link>
+                            </form>
+                        </li>
+                    @else
+                        <li><a href="{{ route('login') }}">Log in</a></li>
+                        @if (Route::has('register'))
+                            <li><a href="{{ route('register') }}">Register</a></li>
+                        @endif
+                    @endauth
+                @endif
             </ul>
         </div>
     </div>

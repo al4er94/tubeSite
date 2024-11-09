@@ -29,11 +29,11 @@ use Illuminate\Support\Facades\Config;
                         @if(isset($content['data']))
                             @foreach ($content['data'] as $item)
                                 <div class="mt-3 mb-3 mr-3 ml-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                    <a href="{{ route('video', ['id' => $item[VideoContents::FIELD_ID]])}}">
+                                    <a href="{{ route('getVideoById', ['id' => $item[VideoContents::FIELD_ID]])}}">
                                         <img class="rounded-t-lg" src="{{Config::get('app.url') . "/" . $item[VideoContents::FIELD_PREVIEW_URL]}}" alt="">
                                     </a>
                                     <div class="p-5">
-                                        <a href="{{ route('video', ['id' => $item[VideoContents::FIELD_ID]])}}">
+                                        <a href="{{ route('getVideoById', ['id' => $item[VideoContents::FIELD_ID]])}}">
                                             <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$item[VideoContents::FIELD_NAME]}}</p>
                                         </a>
                                     </div>
