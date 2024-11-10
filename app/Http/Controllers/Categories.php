@@ -14,6 +14,21 @@ class Categories extends Controller
     {
         $categories = CategoriesModel::all();
 
+        foreach ($categories as $category) {
+            if (!$category->img_url) {
+                $videosIds = VideoContents::from(VideoContents::getTableName() . " as content")
+                    ->leftJoin(VideoCategories::getTableName() . ' as category',
+                        'content.' . VideoContents::FIELD_ID,
+                        '=',
+                        'category.' . VideoCategories::FIELD_VIDEO_ID)
+                    ->where('category.' . VideoCategories::FIELD_CATEGORY_ID, '=', $category->id)
+                    ->get(['content.' . VideoContents::FIELD_PREVIEW_URL . ' as ' . VideoContents::FIELD_PREVIEW_URL])
+                    ->pluck(VideoContents::FIELD_PREVIEW_URL)->toArray();
+
+                $category->img_url = $videosIds[array_rand($videosIds)];
+            }
+        }
+
         return view('public.categories', [
             'categories' => $categories
         ]);
