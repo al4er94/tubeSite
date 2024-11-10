@@ -10,7 +10,8 @@ class HomePageController extends Controller
     public function main()
     {
         return view('public.main', [
-            'content' => VideoContents::paginate(self::$defaultPagination)->toArray()
+            'content' => VideoContents::paginate(self::$defaultPagination)->toArray(),
+            'header' => __('Looking now: ')
         ]);
     }
 }

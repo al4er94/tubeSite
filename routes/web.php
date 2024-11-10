@@ -5,6 +5,7 @@ use App\Http\Controllers\Categories;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Video;
+use App\Http\Controllers\Search;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,6 +27,8 @@ Route::get('/categories/{id}', [Categories::class, 'getVideosByCategories'])->na
 Route::get('/mostviews', [Categories::class, 'getMostViewVideos'])->name('getMostViewVideos');
 Route::get('/toprated', [Categories::class, 'getTopRatedVideos'])->name('getTopRatedVideos');
 
+Route::post('/search', [Search::class, 'search'])->name('search');
+Route::get('/search/{searchVal}', [Search::class, 'search'])->name('searchView');
 
 //Admin panel routes
 Route::get('/dashboard', [Admin::class, 'getAdminPanel'])->middleware(['auth', 'verified'])->name('dashboard');

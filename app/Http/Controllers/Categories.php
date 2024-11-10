@@ -36,20 +36,21 @@ class Categories extends Controller
                 ->paginate(self::$defaultPagination)
                 ->toArray()
         ]);
-
     }
 
     public function getMostViewVideos()
     {
         return view('public.main', [
-            'content' => VideoContents::orderBy(VideoContents::FIELD_VIEWS, 'desc')->paginate(self::$defaultPagination)->toArray()
+            'content' => VideoContents::orderBy(VideoContents::FIELD_VIEWS, 'desc')->paginate(self::$defaultPagination)->toArray(),
+            'header' => __('Most view: ')
         ]);
     }
 
     public function getTopRatedVideos()
     {
         return view('public.main', [
-            'content' => VideoContents::orderBy(VideoContents::FIELD_LIKES, 'desc')->paginate(self::$defaultPagination) ->toArray()
+            'content' => VideoContents::orderBy(VideoContents::FIELD_LIKES, 'desc')->paginate(self::$defaultPagination) ->toArray(),
+            'header' => __('Top rated: ')
         ]);
     }
 }

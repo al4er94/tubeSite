@@ -77,3 +77,4 @@ use Illuminate\Support\Facades\Route;
         </div>
     </div>
 </nav>
+

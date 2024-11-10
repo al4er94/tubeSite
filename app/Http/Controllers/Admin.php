@@ -14,7 +14,7 @@ class Admin extends Controller
     public function getAdminPanel()
     {
         if (!Auth::getUser()->isAdmin()) {
-            return redirect()->route('home.index');
+            return redirect()->route('home.main');
         }
 
         return view('admin/dashboard');
