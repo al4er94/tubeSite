@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class Search extends Controller
 {
-    public function search(Request $request, $searchVal = null)
+    public function search(Request $request, $locale = null, $searchVal = null)
     {
         if ($request->isMethod($request::METHOD_POST) && $request->session()->token() !== $request->post('_token')) {
             return redirect()->route('home.public');
@@ -36,6 +36,7 @@ class Search extends Controller
 
         if ($request->isMethod($request::METHOD_POST)) {
             return redirect()->route('searchView', [
+                'locale' => app()->getLocale(),
                 'searchVal' => implode('-', $searchArr)
             ]);
         }

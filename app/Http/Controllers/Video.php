@@ -19,7 +19,7 @@ class Video extends Controller
         ]);
     }
 
-    public function getVideoById($id){
+    public function getVideoById($lang = null, $id){
         $video = VideoContents::find($id)->toArray();
         $video[VideoContents::FIELD_URL] = Config::get('app.url') . "/" . $video[VideoContents::FIELD_URL];
         $video[VideoContents::FIELD_PREVIEW_URL] = Config::get('app.url') . "/" . $video[VideoContents::FIELD_PREVIEW_URL];

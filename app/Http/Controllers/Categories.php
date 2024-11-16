@@ -35,7 +35,7 @@ class Categories extends Controller
     }
 
 
-    public function getVideosByCategories(string $id)
+    public function getVideosByCategories(string $lang = null, $id)
     {
         $videosIds = VideoContents::from(VideoContents::getTableName() . " as content")
         ->leftJoin(VideoCategories::getTableName() . ' as category',

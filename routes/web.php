@@ -6,7 +6,9 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Video;
 use App\Http\Controllers\Search;
+use App\Lang\Lang;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\App;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,17 +20,27 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+Route::get('/', function () {
+    return redirect(app()->getLocale());
+});
 
-Route::get('/', [HomePageController::class, 'main'])->name('home.public');
-Route::get('/video/{id}', [Video::class, 'getVideo'])->name('video'); //old
-Route::get('/videos/{id}', [Video::class, 'getVideoById'])->name('getVideoById');
-Route::get('/categories', [Categories::class, 'getAllCategories'])->name('getAllCategories');
-Route::get('/categories/{id}', [Categories::class, 'getVideosByCategories'])->name('getVideosByCategories');
-Route::get('/mostviews', [Categories::class, 'getMostViewVideos'])->name('getMostViewVideos');
-Route::get('/toprated', [Categories::class, 'getTopRatedVideos'])->name('getTopRatedVideos');
+Route::group([
+    'prefix' => '{locale}',
+    'where' => ['locale' => '[a-zA-Z]{2}'],
+    'middleware' => 'setlocale'
+    ], function() {
+    Route::get('/', [HomePageController::class, 'main'])->name('home.public');
+    Route::get('/video/{id}', [Video::class, 'getVideo'])->name('video'); //old
+    Route::get('/videos/{id}', [Video::class, 'getVideoById'])->name('getVideoById');
+    Route::get('/categories', [Categories::class, 'getAllCategories'])->name('getAllCategories');
+    Route::get('/categories/{id}', [Categories::class, 'getVideosByCategories'])->name('getVideosByCategories');
+    Route::get('/mostviews', [Categories::class, 'getMostViewVideos'])->name('getMostViewVideos');
+    Route::get('/toprated', [Categories::class, 'getTopRatedVideos'])->name('getTopRatedVideos');
+    Route::get( '/search/{searchVal}', [Search::class, 'search'])->name('searchView');
+    Route::post('/search', [Search::class, 'search'])->name('search');
+    Route::get( '/changeLang', [HomePageController::class, 'changeLanguage'])->name('changeLanguage');
+});
 
-Route::post('/search', [Search::class, 'search'])->name('search');
-Route::get('/search/{searchVal}', [Search::class, 'search'])->name('searchView');
 
 //Admin panel routes
 Route::get('/dashboard', [Admin::class, 'getAdminPanel'])->middleware(['auth', 'verified'])->name('dashboard');

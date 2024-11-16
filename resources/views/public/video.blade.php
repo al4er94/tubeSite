@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Config;
                     <h1 class="block mt-6 text-xl text-gray-900">{{$video[VideoContents::FIELD_NAME]}}</h1>
                     <div class="flex justify-start items-start">
                         @foreach($categories as $category)
-                            <a class="bg-origin-content px-2 py-0.5 mt-0 ml-0.25 mr-0 mb-0.25 bg-blue-200 rounded-lg " href="{{ route('getVideosByCategories', ['id' => $category[Categories::FIELD_ID]])}}">{{$category['name']}}</a>
+                            <a class="bg-origin-content px-2 py-0.5 mt-0 ml-0.25 mr-0 mb-0.25 bg-blue-200 rounded-lg " href="{{ route('getVideosByCategories', ['locale' => app()->getLocale(), 'id' => $category[Categories::FIELD_ID]])}}">{{$category['name']}}</a>
                         @endforeach
                     </div>
                     <div class="mt-8 flex flex-col justify-center center items-center">
