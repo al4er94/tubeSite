@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Config;
                                     </a>
                                     <div class="p-5">
                                         <a href="{{ route('getVideosByCategories', ['id' => $item[Categories::FIELD_ID], 'locale' => app()->getLocale()])}}">
-                                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$item[Categories::FIELD_NAME]}}</p>
+                                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$item[Categories::getNameByLocale()]}}</p>
                                         </a>
                                     </div>
                                 </div>

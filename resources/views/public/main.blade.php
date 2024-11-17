@@ -24,7 +24,7 @@ use Illuminate\Support\Facades\Config;
                                     </a>
                                     <div class="p-5">
                                         <a href="{{ route('getVideoById', ['id' => $item[VideoContents::FIELD_ID], 'locale' => app()->getLocale()])}}">
-                                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$item[VideoContents::FIELD_NAME]}}</p>
+                                            <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{$item[VideoContents::getNameByLocale()]}}</p>
                                         </a>
                                     </div>
                                     <div class="p-5 flex justify-between">

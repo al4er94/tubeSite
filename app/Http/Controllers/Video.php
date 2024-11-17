@@ -30,7 +30,7 @@ class Video extends Controller
                 '=',
                 'vc.' . VideoCategories::FIELD_CATEGORY_ID)
             ->where('vc.' . VideoCategories::FIELD_VIDEO_ID, '=', $id)
-            ->get(['c.' . Categories::FIELD_ID . ' as ' . Categories::FIELD_ID, 'c.' . Categories::FIELD_NAME . ' as ' . Categories::FIELD_NAME])
+            ->get(['c.' . Categories::FIELD_ID . ' as ' . Categories::FIELD_ID, 'c.' . Categories::getNameByLocale() . ' as ' . Categories::FIELD_NAME])
             ->toArray();
 
         return view('public.video', [

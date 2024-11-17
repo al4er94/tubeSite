@@ -117,13 +117,21 @@ class Admin extends Controller
         if ($id === '0') {
             Categories::insert([
                 Categories::FIELD_NAME => $request->filled('name') ? (string) $request->post('name') : '',
-                Categories::FIELD_DESCRIPTION => $request->filled('description') ?(string) $request->post('description') : '',
+                Categories::FIELD_NAME_RU => $request->filled('name_ru') ? (string) $request->post('name_ru') : '',
+                Categories::FIELD_NAME_DE => $request->filled('name_de') ? (string) $request->post('name_de') : '',
+                Categories::FIELD_DESCRIPTION => $request->filled('description') ? (string) $request->post('description') : '',
+                Categories::FIELD_DESCRIPTION_RU => $request->filled('description_ru') ? (string) $request->post('description_ru') : '',
+                Categories::FIELD_DESCRIPTION_DE => $request->filled('description_de') ? (string) $request->post('description_de') : '',
                 Categories::FIELD_IMG_URL => $request->filled('img_url') ? (string) $request->post('img_url') : ''
             ]);
         } else {
             Categories::where(Categories::FIELD_ID, '=', $id)->limit(1)->update([
                 Categories::FIELD_NAME => $request->filled('name') ? (string) $request->post('name') : '',
+                Categories::FIELD_NAME_RU => $request->filled('name_ru') ? (string) $request->post('name_ru') : '',
+                Categories::FIELD_NAME_DE => $request->filled('name_de') ? (string) $request->post('name_de') : '',
                 Categories::FIELD_DESCRIPTION => $request->filled('description') ? (string) $request->post('description') : '',
+                Categories::FIELD_DESCRIPTION_RU => $request->filled('description_ru') ? (string) $request->post('description_ru') : '',
+                Categories::FIELD_DESCRIPTION_DE => $request->filled('description_de') ? (string) $request->post('description_de') : '',
                 Categories::FIELD_IMG_URL => $request->filled('img_url') ? (string) $request->post('img_url') : ''
             ]);
         }
