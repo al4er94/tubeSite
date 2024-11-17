@@ -15,7 +15,7 @@ class HomePageController extends Controller
     {
         return view('public.main', [
             'content' => VideoContents::paginate(self::$defaultPagination)->toArray(),
-            'header' => __('Looking now: ')
+            'header' => __('public.lookingNow')
         ]);
     }
 
@@ -28,6 +28,7 @@ class HomePageController extends Controller
         }
 
         App::setLocale($value);
+        $request->session()->put('lang', $value);
 
         return redirect(app()->getLocale());
     }

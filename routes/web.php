@@ -7,6 +7,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Video;
 use App\Http\Controllers\Search;
 use App\Lang\Lang;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\App;
 
@@ -20,7 +21,12 @@ use Illuminate\Support\Facades\App;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-Route::get('/', function () {
+Route::get('/', function (Request $request) {
+    $lang = $request->session()->get('lang');
+    if (!empty($lang)) {
+        App::setLocale($lang);
+    }
+
     return redirect(app()->getLocale());
 });
 

@@ -24,7 +24,7 @@ use App\Http\Middleware\SetLocale;
                        @else
                        class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                        @endif
-                    >Home</a>
+                    >{{__('public.home')}}</a>
                 </li>
                 <li>
                     <a href="{{ route('getAllCategories', ['locale' => app()->getLocale()])}}"
@@ -33,7 +33,7 @@ use App\Http\Middleware\SetLocale;
                        @else
                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                         @endif
-                    >Categories</a>
+                    >{{__('public.categories')}}</a>
                 </li>
                 <li>
                     <a href="{{ route('getTopRatedVideos', ['locale' => app()->getLocale()])}}"
@@ -42,7 +42,7 @@ use App\Http\Middleware\SetLocale;
                        @else
                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                        @endif
-                    >Top rated</a>
+                    >{{__('public.topRated')}}</a>
                 </li>
                 <li>
                     <a href="{{ route('getMostViewVideos', ['locale' => app()->getLocale()])}}"
@@ -51,11 +51,11 @@ use App\Http\Middleware\SetLocale;
                        @else
                            class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                        @endif
-                    >Most view</a>
+                    >{{__('public.mostView')}}</a>
                 </li>
                 @if (Route::has('login'))
                     @auth
-                        <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="#">My Favorite</a></li>
+                        <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="#">{{__('public.myFavorite')}}</a></li>
                         <li>
                             <form method="POST" action="{{ route('logout', ['locale' => app()->getLocale()]) }}">
                                 @csrf
@@ -63,19 +63,19 @@ use App\Http\Middleware\SetLocale;
                                 <x-dropdown-link :href="route('logout')"
                                                  onclick="event.preventDefault();
                                                                 this.closest('form').submit();">
-                                    {{ __('Log Out') }}
+                                    {{__('public.logout')}}
                                 </x-dropdown-link>
                             </form>
                         </li>
                     @else
-                        <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('login') }}">Log in</a></li>
+                        <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('login') }}">{{__('public.login')}}</a></li>
                         @if (Route::has('register'))
-                            <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('register') }}">Register</a></li>
+                            <li><a class="block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" href="{{ route('register') }}">{{__('public.registration')}}</a></li>
                         @endif
                     @endauth
                 @endif
                 <li>
-                    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"> Lang <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                    <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="flex items-center justify-between w-full py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent"> {{__('public.language')}} <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg></button>
                     <!-- Dropdown menu -->
