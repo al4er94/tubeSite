@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\HomePageController;
 use Illuminate\Console\Command;
 use App\Models\VideoContents;
 use App\Models\Categories;
@@ -33,12 +34,11 @@ class Parser extends Command
         $lastInsertedIds = VideoContents::all([VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID])
             ->pluck(VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID)->toArray();
 
-        $categoriesDb = Categories::all([Categories::FIELD_ID, Categories::FIELD_NAME_RU])
-            ->pluck(Categories::FIELD_ID, Categories::FIELD_NAME_RU)->toArray();
+        for ($i= 190045; $i < 190070; $i++) {
+            $categoriesDb = Categories::all([Categories::FIELD_ID, Categories::FIELD_NAME_RU])
+                ->pluck(Categories::FIELD_ID, Categories::FIELD_NAME_RU)->toArray();
 
-        $modelsDb = Models::all([Models::FIELD_ID, Models::FIELD_NAME])->pluck(Models::FIELD_ID, Models::FIELD_NAME)->toArray();
-
-        for ($i= 190014; $i<190024; $i++) {
+            $modelsDb = Models::all([Models::FIELD_ID, Models::FIELD_NAME])->pluck(Models::FIELD_ID, Models::FIELD_NAME)->toArray();
 
             sleep(8);
             $id = $i;
@@ -49,17 +49,22 @@ class Parser extends Command
                 continue;
             }
 
-            $endpoint = "https://rusoska.com/video/$id";
+            $endpoint = HomePageController::getEmbedDomen() . "/video/$id";
 
-            //$endpoint = 'tets.com';
             $client = new \GuzzleHttp\Client();
 
 
-            $response = $client->request('GET', $endpoint, [
-                'headers' => [
-                    'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
-                ]
-            ]);
+            try {
+                $response = $client->request('GET', $endpoint, [
+                    'headers' => [
+                        'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
+                    ]
+                ]);
+            }catch ( \Exception\RequestException $exception) {
+                var_dump("err: " . $exception->getMessage());
+
+                continue;
+            }
 
             $views = rand(200, 100000);
             $likes = rand(1, (int)$views / 2);

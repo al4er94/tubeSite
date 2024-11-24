@@ -1,5 +1,6 @@
 <?php
 use App\Models\VideoContents;
+use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Config;
 ?>
 
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Config;
                             @foreach ($content['data'] as $item)
                                 <div class="mt-3 mb-3 mr-3 ml-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                     <a href="{{ route('getVideoById', ['locale' => app()->getLocale(), 'id' => $item[VideoContents::FIELD_ID]])}}">
-                                        <img class="rounded-t-lg" src="{{"https://rusoska.com/" . $item[VideoContents::FIELD_PREVIEW_URL]}}" alt="">
+                                        <img class="rounded-t-lg" src="{{HomePageController::getEmbedDomen() . $item[VideoContents::FIELD_PREVIEW_URL]}}" alt="">
                                     </a>
                                     <div class="p-5">
                                         <a href="{{ route('getVideoById', ['id' => $item[VideoContents::FIELD_ID], 'locale' => app()->getLocale()])}}">

@@ -21,8 +21,8 @@ class Video extends Controller
 
     public function getVideoById($lang = null, $id){
         $video = VideoContents::find($id)->toArray();
-        $video[VideoContents::FIELD_URL] = "https://rusoska.com" . $video[VideoContents::FIELD_URL];
-        $video[VideoContents::FIELD_PREVIEW_URL] = "https://rusoska.com/" . $video[VideoContents::FIELD_PREVIEW_URL];
+        $video[VideoContents::FIELD_URL] = HomePageController::getEmbedDomen() . $video[VideoContents::FIELD_URL];
+        $video[VideoContents::FIELD_PREVIEW_URL] = HomePageController::getEmbedDomen() . $video[VideoContents::FIELD_PREVIEW_URL];
 
         $categories = Categories::from(Categories::getTableName() . " as c")
             ->leftJoin(VideoCategories::getTableName() . ' as vc',

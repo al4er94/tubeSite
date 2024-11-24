@@ -33,8 +33,8 @@ class HomePageController extends Controller
         return redirect(app()->getLocale());
     }
 
-    public function getFrame($id)
+    public static function getEmbedDomen() : string
     {
-        return redirect("https://rusoska.com/embed/$id");
+        return 'https://x17.rusoska.mobi';
     }
 }
