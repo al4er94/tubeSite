@@ -11,6 +11,7 @@ export default defineConfig({
                 'resources/css/default/fontawesome-all.min.css',
                 'resources/css/default/style.css',
                 'resources/js/app.js',
+                'resources/js/video.js',
             ],
             refresh: true,
         }),

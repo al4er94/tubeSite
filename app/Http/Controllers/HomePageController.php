@@ -32,4 +32,9 @@ class HomePageController extends Controller
 
         return redirect(app()->getLocale());
     }
+
+    public function getFrame($id)
+    {
+        return redirect("https://rusoska.com/embed/$id");
+    }
 }

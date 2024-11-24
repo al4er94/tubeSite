@@ -25,7 +25,11 @@ class Categories extends Controller
                     ->get(['content.' . VideoContents::FIELD_PREVIEW_URL . ' as ' . VideoContents::FIELD_PREVIEW_URL])
                     ->pluck(VideoContents::FIELD_PREVIEW_URL)->toArray();
 
-                $category->img_url = $videosIds[array_rand($videosIds)];
+                if (empty($videosIds)) {
+                    $category->img_url = '';
+                } else {
+                    $category->img_url = $videosIds[array_rand($videosIds)];
+                }
             }
         }
 

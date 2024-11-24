@@ -18,16 +18,11 @@ use Illuminate\Support\Facades\Config;
                         @endforeach
                     </div>
                     <div class="mt-8 flex flex-col justify-center center items-center">
-                        <video controls class="w-full h-auto max-w-full border border-gray-200 rounded-lg">
-                            <source src="{{$video[VideoContents::FIELD_URL]}}" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <p class="block mt-2 leading-loose text-gray-600 dark:text-gray-300">
-                            {{$video[VideoContents::getDescriptionByLocale()]}}
-                        </p>
+                        <iframe id = "frame" width="750" height="650" src="{{$video[VideoContents::FIELD_URL]}}" frameborder="0" allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    @vite(['resources/js/video.js'])
 </x-public-layout>

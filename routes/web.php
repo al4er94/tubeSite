@@ -47,6 +47,8 @@ Route::group([
     Route::get( '/changeLang', [HomePageController::class, 'changeLanguage'])->name('changeLanguage');
 });
 
+Route::get('/getframe/{id}', [HomePageController::class, 'getFrame'])->name('getFrame');
+
 
 //Admin panel routes
 Route::get('/dashboard', [Admin::class, 'getAdminPanel'])->middleware(['auth', 'verified'])->name('dashboard');
