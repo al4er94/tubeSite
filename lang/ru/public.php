@@ -13,4 +13,5 @@ return [
     'lookingNow' => 'Сейчас смотрят',
     'searchVideos' => 'Поиск видео',
     'search' => 'Поиск',
+    'models' => 'Модели',
 ];

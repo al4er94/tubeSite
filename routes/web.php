@@ -6,6 +6,7 @@ use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Video;
 use App\Http\Controllers\Search;
+use App\Http\Controllers\Models;
 use App\Lang\Lang;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -45,6 +46,8 @@ Route::group([
     Route::get( '/search/{searchVal}', [Search::class, 'search'])->name('searchView');
     Route::post('/search', [Search::class, 'search'])->name('search');
     Route::get( '/changeLang', [HomePageController::class, 'changeLanguage'])->name('changeLanguage');
+    Route::get( '/models', [Models::class, 'getAllModels'])->name('getAllModels');
+    Route::get( '/models/{id}', [Models::class, 'getVideosByModel'])->name('getVideosByModel');
 });
 
 Route::get('/getframe/{id}', [HomePageController::class, 'getFrame'])->name('getFrame');

@@ -8,7 +8,7 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
-    public static $defaultPagination = 24;
+    public static $defaultPagination = 48;
 
     use AuthorizesRequests, ValidatesRequests;
 }

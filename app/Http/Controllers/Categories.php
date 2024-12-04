@@ -22,6 +22,7 @@ class Categories extends Controller
                         '=',
                         'category.' . VideoCategories::FIELD_VIDEO_ID)
                     ->where('category.' . VideoCategories::FIELD_CATEGORY_ID, '=', $category->id)
+                    ->limit(10)
                     ->get(['content.' . VideoContents::FIELD_PREVIEW_URL . ' as ' . VideoContents::FIELD_PREVIEW_URL])
                     ->pluck(VideoContents::FIELD_PREVIEW_URL)->toArray();
 

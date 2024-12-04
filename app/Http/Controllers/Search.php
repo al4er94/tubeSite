@@ -26,11 +26,13 @@ class Search extends Controller
         $vc = VideoContents::where(function ($query) use ($searchArr) {
             foreach ($searchArr as $i => $searchItem) {
                 if ($i == 0) {
-                    $query->where(VideoContents::getNameByLocale(), 'like', '% ' . $searchItem . ' %');
+                    $query->where(VideoContents::getNameByLocale(), 'like', '%' . $searchItem . '%');
                 } else {
-                    $query->orWhere(VideoContents::getNameByLocale(), 'like', '% ' . $searchItem . ' %');
+                    $query->orWhere(VideoContents::getNameByLocale(), 'like', '%' . $searchItem . '%');
                 }
-                $query->orWhere(VideoContents::FIELD_DESCRIPTION, 'like', '% ' . $searchItem . ' %');
+                $query  ->orWhere(VideoContents::getNameByLocale(), 'like', '%' . $searchItem )
+                        ->orWhere(VideoContents::getNameByLocale(), 'like', '' . $searchItem . '%')
+                        ->orWhere(VideoContents::FIELD_DESCRIPTION, 'like', '% '. $searchItem . '%');
             }
         })->paginate(self::$defaultPagination);
 

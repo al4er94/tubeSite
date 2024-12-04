@@ -8,9 +8,9 @@ use App\Models\Categories;
 
 class Translater  extends Command
 {
-    const FIELD_NAME_TO = 'name_de';
+    const FIELD_NAME_TO = 'name';
     const FIELD_NAME_FROM = 'name_ru';
-    const LANG_TO = 'de';
+    const LANG_TO = 'en';
     const LANG_FROM = 'ru';
 
     /**
@@ -32,7 +32,7 @@ class Translater  extends Command
      */
     public function handle()
     {
-        $this->translateVideos();
+        $this->translateCategories();
     }
 
     protected function translateCategories()
@@ -92,19 +92,21 @@ class Translater  extends Command
         $translate = [];
         $contentIds = [];
         $i = 0;
-        foreach (VideoContents::all() as $content ) {
-            if ($content->{self::FIELD_NAME_TO} != '') {
-                continue;
-            }
+        foreach (VideoContents::all()->chunk(50) as $chunk) {
+            foreach ($chunk as $content) {
+                if ($content->{self::FIELD_NAME_TO} != '') {
+                    continue;
+                }
 
-            if ($content->{self::FIELD_NAME_FROM} == '') {
-                continue;
-            }
+                if ($content->{self::FIELD_NAME_FROM} == '') {
+                    continue;
+                }
 
-            $name = $content->{self::FIELD_NAME_FROM};
-            $translate[] = $name;
-            $contentIds[$i] = $content;
-            $i++;
+                $name = $content->{self::FIELD_NAME_FROM};
+                $translate[] = $name;
+                $contentIds[$i] = $content;
+                $i++;
+            }
         }
 
         if (!empty($translate)) {

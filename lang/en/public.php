@@ -13,4 +13,5 @@ return [
     'lookingNow' => 'Looking now',
     'searchVideos' => 'Search videos',
     'search' => 'Search',
+    'models' => 'Models',
 ];

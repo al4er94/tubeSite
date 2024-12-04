@@ -34,14 +34,22 @@ class Parser extends Command
         $lastInsertedIds = VideoContents::all([VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID])
             ->pluck(VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID)->toArray();
 
-        for ($i= 190045; $i < 190070; $i++) {
+        for ($i= 156183; $i < 160000; $i++) {
+            var_dump('parse' . $i);
+
+            $id = $i;
+
+            if (isset($lastInsertedIds[$id])) {
+                var_dump('video id ' . $id . ' exist');
+
+                continue;
+            }
+
             $categoriesDb = Categories::all([Categories::FIELD_ID, Categories::FIELD_NAME_RU])
                 ->pluck(Categories::FIELD_ID, Categories::FIELD_NAME_RU)->toArray();
 
             $modelsDb = Models::all([Models::FIELD_ID, Models::FIELD_NAME])->pluck(Models::FIELD_ID, Models::FIELD_NAME)->toArray();
 
-            sleep(8);
-            $id = $i;
 
             if (isset($lastInsertedIds[$id])) {
                 var_dump('video id ' . $id . ' exist');
@@ -60,8 +68,8 @@ class Parser extends Command
                         'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36',
                     ]
                 ]);
-            }catch ( \Exception\RequestException $exception) {
-                var_dump("err: " . $exception->getMessage());
+            }catch ( \GuzzleHttp\Exception\ClientException $e) {
+                var_dump("err request: " . $e->getMessage());
 
                 continue;
             }
@@ -212,6 +220,7 @@ class Parser extends Command
             }
 
             VideoModels::insert($linkModels);
+
         }
 
     }
