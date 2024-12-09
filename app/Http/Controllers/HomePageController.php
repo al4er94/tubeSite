@@ -8,13 +8,16 @@ use App\Models\VideoContents;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 
 class HomePageController extends Controller
 {
     public function main()
     {
+        $videos = VideoContents::orderBy(VideoContents::FIELD_ID, 'DESC')->paginate(self::$defaultPagination)->toArray();
+
         return view('public.main', [
-            'content' => VideoContents::paginate(self::$defaultPagination)->toArray(),
+            'content' => $videos,
             'header' => __('public.lookingNow')
         ]);
     }
@@ -35,6 +38,12 @@ class HomePageController extends Controller
 
     public static function getEmbedDomen() : string
     {
-        return 'https://x17.rusoska.mobi';
+        $embedDomain = Session::get("embedDomain");
+
+        if (empty($embedDomain)) {
+            $embedDomain = SetLocale::EN_DOMAIN;
+        }
+
+        return $embedDomain;
     }
 }

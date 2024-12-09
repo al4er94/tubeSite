@@ -34,7 +34,7 @@ class Parser extends Command
         $lastInsertedIds = VideoContents::all([VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID])
             ->pluck(VideoContents::FIELD_ID, VideoContents::FIELD_VK_ID)->toArray();
 
-        for ($i= 156183; $i < 160000; $i++) {
+        for ($i= 190000; $i < 190800; $i++) {
             var_dump('parse' . $i);
 
             $id = $i;
@@ -57,7 +57,7 @@ class Parser extends Command
                 continue;
             }
 
-            $endpoint = HomePageController::getEmbedDomen() . "/video/$id";
+            $endpoint = "https://x17.rusoska.mobi/video/$id";
 
             $client = new \GuzzleHttp\Client();
 
@@ -202,7 +202,9 @@ class Parser extends Command
                 }
 
                 $insertModels[] = [
-                    Models::FIELD_NAME => $modelName
+                    Models::FIELD_NAME => $modelName,
+                    Models::FIELD_IMG => "",
+                    Models::FIELD_VIDEO_COUNT => 0
                 ];
             }
 
@@ -219,7 +221,7 @@ class Parser extends Command
                 ];
             }
 
-            VideoModels::insert($linkModels);
+            //VideoModels::insert($linkModels);
 
         }
 
