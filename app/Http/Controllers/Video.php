@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Config;
 use App\Models\VideoContents;
 use App\Models\Categories;
@@ -19,7 +20,7 @@ class Video extends Controller
         ]);
     }
 
-    public function getVideoById($lang = null, $id){
+    public function getVideoById($lang = null, $id, Request $request){
         $video = VideoContents::find($id)->toArray();
         $video[VideoContents::FIELD_URL] = HomePageController::getEmbedDomen() . $video[VideoContents::FIELD_URL];
         $video[VideoContents::FIELD_PREVIEW_URL] = HomePageController::getEmbedDomen() . $video[VideoContents::FIELD_PREVIEW_URL];
@@ -35,7 +36,18 @@ class Video extends Controller
 
         return view('public.video', [
             'video' => $video,
+            'tkn' => self::generateVideoToken($request),
             'categories' => $categories
         ]);
+    }
+
+    public static function generateVideoToken(Request $request)
+    {
+        $json = json_encode([
+            'time' => time(),
+            'ua' => $request->server('HTTP_USER_AGENT')
+        ]);
+
+        return base64_encode ($json);
     }
 }

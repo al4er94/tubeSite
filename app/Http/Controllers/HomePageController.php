@@ -38,12 +38,6 @@ class HomePageController extends Controller
 
     public static function getEmbedDomen() : string
     {
-        $embedDomain = Session::get("embedDomain");
-
-        if (empty($embedDomain)) {
-            $embedDomain = SetLocale::EN_DOMAIN;
-        }
-
-        return $embedDomain;
+        return SetLocale::EN_DOMAIN;
     }
 }

@@ -17,8 +17,7 @@ use Illuminate\Support\Facades\Config;
                             <a class="bg-origin-content px-2 py-0.5 mt-0 ml-0.25 mr-0 mb-0.25 bg-blue-200 rounded-lg " href="{{ route('getVideosByCategories', ['locale' => app()->getLocale(), 'id' => $category[Categories::FIELD_ID]])}}">{{$category['name']}}</a>
                         @endforeach
                     </div>
-                    <div class="mt-8 flex flex-col justify-center center items-center">
-                        <iframe id = "frame" style="width:100%; height:700px;" src="{{$video[VideoContents::FIELD_URL]}}" frameborder="0" allowfullscreen></iframe>
+                    <div class="mt-8 flex flex-col justify-center center items-center" id = "frame" data-tkn = "{{$tkn}}" data-id="{{$video[VideoContents::FIELD_ID]}}">
                     </div>
                     <div class="p-5 flex justify-between">
                         <div class="flex items-start text-blue-500">
