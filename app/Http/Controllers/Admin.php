@@ -56,7 +56,10 @@ class Admin extends Controller
 
         VideoContents::where(VideoContents::FIELD_ID, '=', $id)->update([
             VideoContents::FIELD_NAME => $request->filled('name') ? $request->post('name') : '',
+            VideoContents::FIELD_NAME_RU => $request->filled('name_ru') ? $request->post('name_ru') : '',
+            VideoContents::FIELD_NAME_DE => $request->filled('name_de') ? $request->post('name_de') : '',
             VideoContents::FIELD_DESCRIPTION => $request->filled('description') ? $request->post('description') : '',
+            VideoContents::FIELD_DESCRIPTION_RU => $request->filled('description_ru') ? $request->post('description_ru') : '',
             VideoContents::FIELD_LIKES => $request->filled('likes') ? (int) $request->post('likes') : '',
             VideoContents::FIELD_VIEWS => $request->filled('views') ? (int) $request->post('views') : '',
         ]);

@@ -14,4 +14,5 @@ return [
     'searchVideos' => 'Search videos',
     'search' => 'Search',
     'models' => 'Models',
+    'new' => 'New',
 ];

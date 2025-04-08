@@ -14,4 +14,5 @@ return [
     'searchVideos' => 'Поиск видео',
     'search' => 'Поиск',
     'models' => 'Модели',
+    'new' => 'Новые',
 ];

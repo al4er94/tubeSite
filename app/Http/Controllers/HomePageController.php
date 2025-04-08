@@ -18,7 +18,7 @@ class HomePageController extends Controller
 
         return view('public.main', [
             'content' => $videos,
-            'header' => __('public.lookingNow')
+            'header' => __('public.new')
         ]);
     }
 
