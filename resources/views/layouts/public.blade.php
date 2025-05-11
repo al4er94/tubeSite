@@ -11,6 +11,12 @@
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
 
+    <link type="image/x-icon" rel="shortcut icon" href="assets/img/icon/logo_2_2.png">
+    <link type="image/png" sizes="16x16" rel="icon" href="assets/img/icon/logo_2_2_16.png">
+    <link type="image/png" sizes="32x32" rel="icon" href="assets/img/icon/logo_2_2_32.png">
+    <link type="image/png" sizes="96x96" rel="icon" href="assets/img/icon/logo_2_2_96.png">
+    <link type="image/png" sizes="120x120" rel="icon" href="assets/img/icon/logo_2_2_120.png">
+
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
