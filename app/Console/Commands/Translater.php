@@ -8,9 +8,9 @@ use App\Models\Categories;
 
 class Translater  extends Command
 {
-    const FIELD_NAME_TO = 'name';
+    const FIELD_NAME_TO = 'name_de';
     const FIELD_NAME_FROM = 'name_ru';
-    const LANG_TO = 'en';
+    const LANG_TO = 'de';
     const LANG_FROM = 'ru';
 
     /**
@@ -32,7 +32,7 @@ class Translater  extends Command
      */
     public function handle()
     {
-        $this->translateCategories();
+        $this->translateVideos();
     }
 
     protected function translateCategories()

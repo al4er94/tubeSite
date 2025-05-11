@@ -13,5 +13,5 @@ return [
     'lookingNow' => 'Jetzt schauen',
     'searchVideos' => 'Suche nach Videos',
     'search' => 'Suche',
-    'new' => 'Новые',
+    'new' => 'Neu',
 ];
