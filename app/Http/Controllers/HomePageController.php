@@ -14,7 +14,7 @@ class HomePageController extends Controller
 {
     public function main()
     {
-        $videos = VideoContents::orderBy(VideoContents::FIELD_ID, 'DESC')->paginate(self::$defaultPagination)->toArray();
+        $videos = VideoContents::orderBy(VideoContents::FIELD_ID, 'asc')->paginate(self::$defaultPagination)->toArray();
 
         return view('public.main', [
             'content' => $videos,
