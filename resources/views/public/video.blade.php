@@ -4,6 +4,8 @@ use App\Models\Categories;
 use Illuminate\Support\Facades\Config;
 ?>
 
+@section('page_title'){{$title}}@endsection
+
 <x-public-layout>
     @include('public.search')
 

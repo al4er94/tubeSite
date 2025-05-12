@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Config;
 use App\Models\VideoContents;
 use App\Models\Categories;
 use App\Models\VideoCategories;
+use Illuminate\Support\Facades\App;
 
 class Video extends Controller
 {
@@ -33,7 +34,10 @@ class Video extends Controller
             ->get(['c.' . Categories::FIELD_ID . ' as ' . Categories::FIELD_ID, 'c.' . Categories::getNameByLocale() . ' as ' . Categories::FIELD_NAME])
             ->toArray();
 
+        $title = $video[VideoContents::getNameByLocale()];
+
         return view('public.video', [
+            'title' => $title,
             'video' => $video,
             'tkn' => self::generateVideoToken($request),
             'categories' => $categories

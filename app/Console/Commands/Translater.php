@@ -92,11 +92,12 @@ class Translater  extends Command
         $translate = [];
         $contentIds = [];
         $i = 0;
-        foreach (VideoContents::all()->chunk(50) as $chunk) {
+
+        //$videos = VideoContents::all()->chunk(50);
+        $videos = VideoContents::where(VideoContents::FIELD_ID, '>=', 294)->where(VideoContents::FIELD_ID, '<=', 338)->get()->chunk(50);
+
+        foreach ($videos as $chunk) {
             foreach ($chunk as $content) {
-                if ($content->{self::FIELD_NAME_TO} != '') {
-                    continue;
-                }
 
                 if ($content->{self::FIELD_NAME_FROM} == '') {
                     continue;

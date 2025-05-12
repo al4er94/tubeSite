@@ -4,6 +4,9 @@ use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Config;
 ?>
 
+@if(isset($header))
+    @section('page_title'){{$header}}@endsection
+@endif
 <x-public-layout>
     @include('public.search')
 
@@ -16,7 +19,7 @@ use Illuminate\Support\Facades\Config;
                             {{$header}}
                         </h1>
                     @endif
-                    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4">
                         @if(isset($content['data']))
                             @foreach ($content['data'] as $item)
                                 <div class="mt-3 mb-3 mr-3 ml-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col gap-5">
