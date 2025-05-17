@@ -39,11 +39,11 @@ class Categories extends BaseModel
     {
         switch (app()->getLocale()){
             case SetLocale::LANG_RU:
-                return self::FIELD_NAME_RU;
+                return self::FIELD_DESCRIPTION_RU;
             case SetLocale::LANG_DE:
-                return self::FIELD_NAME_DE;
+                return self::FIELD_DESCRIPTION_DE;
             default:
-                return self::FIELD_NAME;
+                return self::FIELD_DESCRIPTION;
         }
     }
 

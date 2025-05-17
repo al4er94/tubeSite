@@ -18,7 +18,10 @@ class HomePageController extends Controller
 
         return view('public.main', [
             'content' => $videos,
-            'header' => __('public.new')
+            'title' => __('public.new') . " - " . __('public.leakedGirls'),
+            'header' => __('public.new'),
+            'article' => __('public.articleMain'),
+            'description' => __('public.new') . " - " . __('public.onlineFree'),
         ]);
     }
 

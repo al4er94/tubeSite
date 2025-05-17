@@ -46,6 +46,7 @@ class Search extends Controller
         return view('public.main', [
             'content' => $vc->toArray(),
             'searchVal' => str_replace('-', ' ', $searchValDef),
+            'title' => str_replace('-', ' ', $searchValDef),
             'header' => str_replace('-', ' ', $searchValDef),
         ]);
     }

@@ -4,8 +4,12 @@ use App\Http\Controllers\HomePageController;
 use Illuminate\Support\Facades\Config;
 ?>
 
-@if(isset($header))
-    @section('page_title'){{$header}}@endsection
+@if(isset($title))
+    @section('page_title'){{$title}}@endsection
+@endif
+
+@if(isset($description))
+    @section('page_description'){{$description}}@endsection
 @endif
 <x-public-layout>
     @include('public.search')
@@ -82,6 +86,12 @@ use Illuminate\Support\Facades\Config;
                             </ul>
                         </nav>
                     </div>
+                    @if(isset($article))
+                    <article class = "text-center">
+                        <h3 class="text-balance">{{$title}}</h3>
+                        <p>{{$article}}</p>
+                    </article>
+                    @endif
                 </div>
             </div>
         </div>

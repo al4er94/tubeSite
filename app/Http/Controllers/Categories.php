@@ -35,13 +35,19 @@ class Categories extends Controller
         }
 
         return view('public.categories', [
-            'categories' => $categories
+            'categories' => $categories,
+            'header' => __('public.categoriesTitle'),
+            'title' => __('public.categoriesTitle') . " - " . __('public.leakedGirls'),
         ]);
     }
 
 
     public function getVideosByCategories(string $lang = null, $id)
     {
+        $category = CategoriesModel::find($id);
+
+        $title = $category->{CategoriesModel::getNameByLocale()};
+
         $videosIds = VideoContents::from(VideoContents::getTableName() . " as content")
         ->leftJoin(VideoCategories::getTableName() . ' as category',
             'content.' . VideoContents::FIELD_ID,
@@ -54,7 +60,11 @@ class Categories extends Controller
         return view('public.main', [
             'content' => VideoContents::whereIn(VideoContents::FIELD_ID, $videosIds)
                 ->paginate(self::$defaultPagination)
-                ->toArray()
+                ->toArray(),
+            'header' => $title,
+            'title' => $title . " - " . __('public.leakedGirls') ,
+            'description' => $title . " " . __('public.porn') . " - " . __('public.onlineFree'),
+            'article' => $category->{CategoriesModel::getDescriptionByLocale()},
         ]);
     }
 
@@ -62,7 +72,9 @@ class Categories extends Controller
     {
         return view('public.main', [
             'content' => VideoContents::orderBy(VideoContents::FIELD_VIEWS, 'desc')->paginate(self::$defaultPagination)->toArray(),
-            'header' => __('Most view: ')
+            'header' => __('public.mostViewTitle'),
+            'title' => __('public.mostViewTitle') . " - " . __('public.leakedGirls'),
+            'description' => __('public.mostView') . " " . __('public.porn') . " - " . __('public.onlineFree'),
         ]);
     }
 
@@ -70,7 +82,9 @@ class Categories extends Controller
     {
         return view('public.main', [
             'content' => VideoContents::orderBy(VideoContents::FIELD_LIKES, 'desc')->paginate(self::$defaultPagination) ->toArray(),
-            'header' => __('Top rated: ')
+            'header' => __('public.topRatedTitle'),
+            'title' => __('public.topRatedTitle') . " - " . __('public.leakedGirls'),
+            'description' => __('public.topRated') . " " . __('public.porn') . " - " . __('public.onlineFree'),
         ]);
     }
 }
