@@ -60,6 +60,13 @@ use Illuminate\Support\Facades\Config;
                             <ul class="flex items-center -space-x-px h-10 text-base">
                                 @foreach($content['links'] as $i => $link)
                                     <li>
+                                        @if($i > 1 &&
+                                            $i < count($content['links']) - 2 &&
+                                            !$link['active'] && $link['label'] != "..." &&
+                                            !$content['links'][$i+1]['active'] &&
+                                            !$content['links'][$i-1]['active'])
+                                          @continue;
+                                        @endif
                                         @if($i == 0 )
                                             <a href="{{$link['url']}}" class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
                                                 <span class="sr-only">Previous</span>
