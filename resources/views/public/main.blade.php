@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Config;
                             @foreach ($content['data'] as $item)
                                 <div class="mt-3 mb-3 mr-3 ml-3 max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col gap-5">
                                     <a class="flex justify-center items-center h-64 relative" href="{{ route('getVideoById', ['locale' => app()->getLocale(), 'id' => $item[VideoContents::FIELD_ID]])}}">
-                                        <img class="rounded-t-lg object-cover min-w-full min-h-full max-w-full max-h-full" src="{{HomePageController::getEmbedDomen() . $item[VideoContents::FIELD_PREVIEW_URL]}}" alt="">
+                                        <img class="rounded-t-lg object-cover min-w-full min-h-full max-w-full max-h-full" src="{{HomePageController::getEmbedDomen() . $item[VideoContents::FIELD_PREVIEW_URL]}}" alt="{{$item[VideoContents::getNameByLocale()]}}">
                                     </a>
                                     <div class="px-5 grow">
                                         <a href="{{ route('getVideoById', ['id' => $item[VideoContents::FIELD_ID], 'locale' => app()->getLocale()])}}">
