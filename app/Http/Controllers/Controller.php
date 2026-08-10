@@ -2,13 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Validation\ValidatesRequests;
-use Illuminate\Routing\Controller as BaseController;
-
-class Controller extends BaseController
+abstract class Controller
 {
-    public static $defaultPagination = 48;
-
-    use AuthorizesRequests, ValidatesRequests;
+    const PAGINATE = 21;
 }

@@ -8,22 +8,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class SetLocale
 {
-    const LANG_EN = 'en';
-    const LANG_DE = 'de';
-    const LANG_RU = 'ru';
-
-
-    const ALL_LANGS = [
-        self::LANG_EN,
-        self::LANG_DE,
-        self::LANG_RU,
-    ];
-
-    const EN_DOMAIN = "http://site/";
-
-    public function handle($request, Closure $next)
+    public function handle(Request $request, Closure $next): Response
     {
-        app()->setLocale($request->segment(1));
+        $locale = $request->route('locale');
+
+        app()->setLocale($locale);
+        session(['locale' => $locale]);
 
         return $next($request);
     }

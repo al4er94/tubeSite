@@ -2,52 +2,79 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\VideoContents;
+use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use Inertia\Response;
 
 class Search extends Controller
 {
-    public function search(Request $request, $locale = null, $searchVal = null)
+    public function index(Request $request): Response
     {
-        if ($request->isMethod($request::METHOD_POST) && $request->session()->token() !== $request->post('_token')) {
-            return redirect()->route('home.public');
+        $query = trim($request->input('q', ''));
+
+        $images = collect();
+        $categories = collect();
+
+        if ($query !== '') {
+            $likedSlugs = session('liked_images', []);
+            $like = '%' . $query . '%';
+
+            $images = Image::with('translations')
+                ->whereHas('translations', fn($q) => $q
+                    ->where('title', 'LIKE', $like)
+                    ->orWhere('description', 'LIKE', $like)
+                )
+                ->paginate(9)
+                ->onEachSide(1)
+                ->withQueryString()
+                ->through(fn(Image $image) => [
+                    'slug'        => $image->slug,
+                    'src'         => $image->url,
+                    'caption'     => $image->translation()?->title,
+                    'description' => $image->translation()?->description,
+                    'views'       => $image->views,
+                    'likes'       => $image->likes,
+                    'liked'       => in_array($image->slug, $likedSlugs),
+                ]);
+
+            $cachedImages = Cache::get('category_images', []);
+
+            $categories = Category::with('translations')
+                ->whereHas('translations', fn($q) => $q
+                    ->where('title', 'LIKE', $like)
+                    ->orWhere('description', 'LIKE', $like)
+                )
+                ->get()
+                ->map(function (Category $category) use ($cachedImages) {
+                    if (isset($cachedImages[$category->slug])) {
+                        $imageUrl = $cachedImages[$category->slug];
+                    } else {
+                        $path = $category->images()->inRandomOrder()->value('path');
+                        $imageUrl = $path ? Storage::disk('public')->url($path) : null;
+                    }
+
+                    return [
+                        'slug'  => $category->slug,
+                        'title' => $category->translation()?->title,
+                        'image' => $imageUrl,
+                    ];
+                })
+                ->filter(fn($c) => $c['image'] !== null)
+                ->values();
         }
 
-        if ($request->isMethod($request::METHOD_POST)) {
-            $searchValDef = $request->post('search');
-        } else {
-          $searchValDef = $searchVal;
-        }
-
-        $searchVal = strtolower(strip_tags(trim($searchValDef)));
-        $searchVal = preg_replace('/([;.,!?:-])/', ' ', $searchVal);
-        $searchArr = explode(' ', $searchVal);
-
-        $vc = VideoContents::where(function ($query) use ($searchArr) {
-            foreach ($searchArr as $i => $searchItem) {
-                if ($i == 0) {
-                    $query->where(VideoContents::getNameByLocale(), 'like', '%' . $searchItem . '%');
-                } else {
-                    $query->orWhere(VideoContents::getNameByLocale(), 'like', '%' . $searchItem . '%');
-                }
-                $query  ->orWhere(VideoContents::getNameByLocale(), 'like', '%' . $searchItem )
-                        ->orWhere(VideoContents::getNameByLocale(), 'like', '' . $searchItem . '%')
-                        ->orWhere(VideoContents::FIELD_DESCRIPTION, 'like', '% '. $searchItem . '%');
-            }
-        })->paginate(self::$defaultPagination);
-
-        if ($request->isMethod($request::METHOD_POST)) {
-            return redirect()->route('searchView', [
-                'locale' => app()->getLocale(),
-                'searchVal' => implode('-', $searchArr)
-            ]);
-        }
-
-        return view('public.main', [
-            'content' => $vc->toArray(),
-            'searchVal' => str_replace('-', ' ', $searchValDef),
-            'title' => str_replace('-', ' ', $searchValDef),
-            'header' => str_replace('-', ' ', $searchValDef),
+        return Inertia::render('Search', [
+            'query'      => $query,
+            'images'     => $images,
+            'categories' => $categories,
+            'meta'       => [
+                'title'       => __('common.seo.title'),
+                'description' => __('common.seo.description'),
+            ],
         ]);
     }
 }
