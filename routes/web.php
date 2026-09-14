@@ -1,84 +1,34 @@
 <?php
 
-use App\Http\Controllers\Admin;
-use App\Http\Controllers\Categories;
-use App\Http\Controllers\HomePageController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\Video;
+use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\Category;
+use App\Http\Controllers\Favorites;
+use App\Http\Controllers\Popular;
 use App\Http\Controllers\Search;
-use App\Http\Controllers\Models;
-use App\Lang\Lang;
-use Illuminate\Http\Request;
+use App\Http\Controllers\SitemapController;
+use App\Http\Controllers\WelcomeController;
+use App\Http\Enums\Language;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\App;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
-|
-*/
-Route::get('/', function (Request $request) {
-    $lang = $request->session()->get('lang');
-    if (!empty($lang)) {
-        App::setLocale($lang);
-    }
+Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-    return redirect(app()->getLocale());
+Route::get('/', function () {
+    return redirect('/' . (session('locale') ?? config('app.locale')));
 });
 
-Route::group([
-    'prefix' => '{locale}',
-    'where' => ['locale' => '[a-zA-Z]{2}'],
-    'middleware' => 'setlocale'
-    ], function() {
-    Route::get('/', [HomePageController::class, 'main'])->name('home.public');
-    Route::get('/video/{id}', [Video::class, 'getVideo'])->name('video'); //old
-    Route::get('/videos/{id}', [Video::class, 'getVideoById'])->name('getVideoById');
-    Route::get('/categories', [Categories::class, 'getAllCategories'])->name('getAllCategories');
-    Route::get('/categories/{id}', [Categories::class, 'getVideosByCategories'])->name('getVideosByCategories');
-    Route::get('/mostviews', [Categories::class, 'getMostViewVideos'])->name('getMostViewVideos');
-    Route::get('/toprated', [Categories::class, 'getTopRatedVideos'])->name('getTopRatedVideos');
-    Route::get( '/search/{searchVal}', [Search::class, 'search'])->name('searchView');
-    Route::post('/search', [Search::class, 'search'])->name('search');
-    Route::get( '/changeLang', [HomePageController::class, 'changeLanguage'])->name('changeLanguage');
-    Route::get( '/models', [Models::class, 'getAllModels'])->name('getAllModels');
-    Route::get( '/models/{id}', [Models::class, 'getVideosByModel'])->name('getVideosByModel');
-});
-
-Route::get('/getframe/{id}', [HomePageController::class, 'getFrame'])->name('getFrame');
-
-
-//Admin panel routes
-Route::get('/dashboard', [Admin::class, 'getAdminPanel'])->middleware(['auth', 'verified'])->name('dashboard');
-
-Route::get('/dashboard/content', [Admin::class, 'getContent'])->middleware(['auth', 'verified'])->name('contents');
-Route::get('/dashboard/content/{id}', [Admin::class, 'getVideoContent'])->middleware(['auth', 'verified'])->name('content');
-Route::post('/dashboard/content/{id}', [Admin::class, 'updateVideoContent'])->middleware(['auth', 'verified'])->name('updateVideoContent');
-Route::delete('/dashboard/content/{id}', [Admin::class, 'updateVideoContent'])->middleware(['auth', 'verified'])->name('dropVideoContent');
-
-
-Route::get('/dashboard/users', [Admin::class, 'getUsers'])->middleware(['auth', 'verified'])->name('users');
-Route::get('/dashboard/user/{id}', [Admin::class, 'getUser'])->middleware(['auth', 'verified'])->name('user');
-Route::post('/dashboard/user/{id}', [Admin::class, 'updateUser'])->middleware(['auth', 'verified'])->name('updateUser');
-
-Route::get('/dashboard/categories', [Admin::class, 'getCategories'])->middleware(['auth', 'verified'])->name('categories');
-Route::get('/dashboard/categories/{id}', [Admin::class, 'getCategory'])->middleware(['auth', 'verified'])->name('category');
-Route::get('/dashboard/category', [Admin::class, 'createCategory'])->middleware(['auth', 'verified'])->name('categoryEmpty');
-Route::post('/dashboard/category/{id}', [Admin::class, 'createCategory'])->middleware(['auth', 'verified'])->name('createCategoryPost');
-
-Route::get('/dashboard/welcome', function (){
-    return view('welcome');
-})->middleware(['auth', 'verified'])->name('welcome');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-
-require __DIR__.'/auth.php';
+Route::prefix('{locale}')
+    ->middleware(SetLocale::class)
+    ->whereIn('locale', array_column(Language::cases(), 'value'))
+    ->group(function () {
+        Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
+        Route::get('/video/{slug}', [WelcomeController::class, 'show'])->name('video.show');
+        Route::get('/video/{slug}/video', [WelcomeController::class, 'video'])->name('video.video');
+        Route::post('/video/{slug}/like', [WelcomeController::class, 'like'])->name('video.like');
+        Route::get('/categories', [CategoriesController::class, 'index'])->name('categories.index');
+        Route::get('/category/{slug}', [Category::class, 'index'])->name('category.show');
+        Route::get('/favorites', [Favorites::class, 'index'])->name('favorites.show');
+        Route::get('/popular', [Popular::class, 'index'])->name('popular.show');
+        Route::get('/search', [Search::class, 'index'])->name('search');
+        Route::get('/videos/{id}', [WelcomeController::class, 'redirectById'])->whereNumber('id');
+    });

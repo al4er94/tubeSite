@@ -1,14 +1,14 @@
 import './bootstrap';
-import 'flowbite';
-import Alpine from 'alpinejs';
+import { createApp, h } from 'vue';
+import { createInertiaApp } from '@inertiajs/vue3';
+import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 
-window.Alpine = Alpine;
-
-Alpine.start();
-
-/*
-window.addEventListener('load', () => {
-    var elements = document.getElementsByClassName( 'fp-ui');
-    elements.remove();
+createInertiaApp({
+    title: (title) => title ? `${title} | Pixelify` : 'Pixelify',
+    resolve: (name) => resolvePageComponent(`./Pages/${name}.vue`, import.meta.glob('./Pages/**/*.vue')),
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mount(el);
+    },
 });
-*/
