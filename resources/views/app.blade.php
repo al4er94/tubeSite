@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="kadam-verification" content="kadam6d0d4df94cb9f3903eb49649c013c200" />
 <title inertia>{{ config('app.name') }}</title>
     @foreach(\App\Http\Enums\Language::cases() as $lang)
         <link rel="alternate" hreflang="{{ $lang->value }}" href="{{ url('/' . $lang->value) }}"/>
