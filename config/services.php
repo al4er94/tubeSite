@@ -35,4 +35,9 @@ return [
         ],
     ],
 
+    'google' => [
+        'gtag_id' => env('GOOGLE_GTAG_ID'),
+        'ads_id'  => env('GOOGLE_ADS_ID'),
+    ],
+
 ];
