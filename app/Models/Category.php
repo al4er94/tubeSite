@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Category extends Model
 {
-    protected $fillable = ['slug'];
+    protected $fillable = ['legacy_id', 'slug'];
 
     public function translations(): HasMany
     {
