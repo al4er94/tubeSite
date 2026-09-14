@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Console\Commands\Concerns\GeneratesUniqueSlugs;
 use App\Models\Category;
 use App\Models\CategoryTranslation;
 use Illuminate\Console\Command;
@@ -11,6 +12,8 @@ use Illuminate\Support\Str;
 
 class MigrateLegacyCategories extends Command
 {
+    use GeneratesUniqueSlugs;
+
     /**
      * php artisan legacy:migrate-categories          — выполнить перенос
      * php artisan legacy:migrate-categories --dry-run — только показать, что будет сделано
@@ -44,7 +47,7 @@ class MigrateLegacyCategories extends Command
                 continue;
             }
 
-            $slug = $this->uniqueSlug(Str::slug($legacy->name) ?: "category-{$legacy->id}");
+            $slug = $this->uniqueSlug(Category::class, Str::slug($legacy->name) ?: "category-{$legacy->id}");
 
             $translations = [
                 'en' => ['title' => $legacy->name, 'description' => $legacy->description],
@@ -89,17 +92,5 @@ class MigrateLegacyCategories extends Command
         $this->comment('Перевода на fr в legacy-таблице нет — для fr сработает фолбэк на дефолтную локаль (см. Category::translation()).');
 
         return self::SUCCESS;
-    }
-
-    private function uniqueSlug(string $base): string
-    {
-        $slug = $base;
-        $i = 1;
-
-        while (Category::where('slug', $slug)->exists()) {
-            $slug = "{$base}-" . $i++;
-        }
-
-        return $slug;
     }
 }

@@ -25,7 +25,7 @@ class Image extends Model
     const FIELD_VIEWS = 'views';
     const FIELD_LIKES = 'likes';
 
-    protected $fillable = ['vk_id', 'path', 'slug', 'link', 'views', 'likes'];
+    protected $fillable = ['legacy_id', 'vk_id', 'path', 'slug', 'link', 'views', 'likes'];
 
     public function translations(): HasMany
     {
